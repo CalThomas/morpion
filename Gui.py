@@ -12,10 +12,10 @@ class Gui():
 
 	def main_menu(self):
 
-		self.one_Player_button = tk.Button(self.root,text = "1 Player",command=self.symbol_player)
+		self.one_Player_button = tk.Button(self.root,text = "1 Player",command=self.info_player)
 		self.one_Player_button.grid(row = 0, column = 0)
 
-		self.two_Player_button = tk.Button(self.root,text = "2 Player",command=self.symbol_player)
+		self.two_Player_button = tk.Button(self.root,text = "2 Player",command=self.info_player)
 		self.two_Player_button.grid(row = 1, column = 0)
 
 		self.quit_button = tk.Button(self.root,text = "Quit",command=quit)
@@ -52,7 +52,7 @@ class Gui():
 			for j in range (1,4):
 				tk.Button(self.root).grid(row = i , column = j)	
 
-	def symbol_player(self):
+	def info_player(self):
 
 		self.one_Player_button.grid_forget()
 		self.two_Player_button.grid_forget()
