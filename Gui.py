@@ -27,6 +27,13 @@ class Gui():
 		self.choice_O.grid_forget()
 		self.back_button.grid_forget()
 		self.quit_button.grid_forget()
+		self.one_Player_button.grid_forget()
+		self.two_Player_button.grid_forget()
+		self.size9_buttton.grid_forget()
+		self.size15_button.grid_forget()
+		self.size16_button.grid_forget()
+
+
 		self.main_menu()
 
 	def draw_grid(self):
@@ -35,6 +42,7 @@ class Gui():
 		self.size15_button.grid_forget()
 		self.size16_button.grid_forget()
 		self.back_button.grid_forget()
+
 		self.quit_button.grid(row = 5, column = 4 )
 
 		tk.Label(text="Player 1").grid(row = 0, column = 0)
