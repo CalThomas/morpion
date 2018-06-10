@@ -45,14 +45,19 @@ class Info_player_page(tk.Frame):
 			self.back_button = tk.Button(self,text = "< Back",command = lambda:controller.show_frame(Main_menu_page)) 
 			self.quit_button = tk.Button(self,text = "quit", command = quit)
 
+			tk.Label(self,text="Name : ").grid(row = 0,column=0)
+			playerName = tk.StringVar()
+			EntryName = tk.Entry(self,textvariable=playerName)
+			EntryName.grid(row = 0,column = 1)
+
 			self.choice_X = tk.Button(self,text="X",command = lambda: controller.show_frame(Grid_size))
-			self.choice_X.grid(row = 0,column = 0)
+			self.choice_X.grid(row = 1,column = 0)
 			
 			self.choice_O = tk.Button(self,text="O",command = lambda: controller.show_frame(Grid_size))
-			self.choice_O.grid(row = 0, column = 1)
+			self.choice_O.grid(row = 1, column = 1)
 			
-			self.back_button.grid(row = 1, column = 0)
-			self.quit_button.grid(row = 1, column = 1)
+			self.back_button.grid(row = 2, column = 0)
+			self.quit_button.grid(row = 2, column = 1)
 
 class Grid_size(tk.Frame):	
 
