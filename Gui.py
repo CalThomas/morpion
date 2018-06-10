@@ -5,7 +5,8 @@ class Gui(tk.Tk):
 
 	def __init__(self,*args,**kwargs):
 		tk.Tk.__init__(self,*args,**kwargs)
-
+		self.title("Tic Tac Toe")
+		self.config(bg ="white")
 		container = tk.Frame(self)
 		container.pack()
 
@@ -28,54 +29,60 @@ class Main_menu_page(tk.Frame) :
 	def __init__(self,parent,controller):
 		tk.Frame.__init__(self,parent)
 
-		self.one_Player_button = tk.Button(self,text = "1 Player",command= lambda:controller.show_frame(Info_player_page))
-		self.one_Player_button.grid(row = 0, column = 0)
+		logo_canvas = tk.Canvas(self,width = 477, height = 329)
+		self.logo = tk.PhotoImage(file = "Morpion.gif")
+		logo_canvas.create_image(239,165,image=self.logo)
+		logo_canvas.grid(row = 0,column = 0,columnspan=5)
 
-		self.two_Player_button = tk.Button(self,text = "2 Player",command=lambda:controller.show_frame(Info_player_page))
-		self.two_Player_button.grid(row = 1, column = 0)
+		one_Player_button = tk.Button(self,text = "1 Player",command= lambda:controller.show_frame(Info_player_page))
+		one_Player_button.grid(row = 1, column = 2,sticky="ew")
 
-		self.quit_button = tk.Button(self,text = "Quit",command=quit)
-		self.quit_button.grid(row = 2,column = 1)
+		two_Player_button = tk.Button(self,text = "2 Player",command=lambda:controller.show_frame(Info_player_page))
+		two_Player_button.grid(row = 2, column = 2,sticky ="ew")
+
+		quit_button = tk.Button(self,text = "Quit",command=quit)
+		quit_button.grid(row = 3,column = 4)
 
 class Info_player_page(tk.Frame):
 
 		def __init__(self,parent,controller):
 
 			tk.Frame.__init__(self,parent)
-			self.back_button = tk.Button(self,text = "< Back",command = lambda:controller.show_frame(Main_menu_page)) 
-			self.quit_button = tk.Button(self,text = "quit", command = quit)
+			back_button = tk.Button(self,text = "< Back",command = lambda:controller.show_frame(Main_menu_page)) 
+			quit_button = tk.Button(self,text = "quit", command = quit)
 
 			tk.Label(self,text="Name : ").grid(row = 0,column=0)
 			playerName = tk.StringVar()
 			EntryName = tk.Entry(self,textvariable=playerName)
 			EntryName.grid(row = 0,column = 1)
 
-			self.choice_X = tk.Button(self,text="X",command = lambda: controller.show_frame(Grid_size))
-			self.choice_X.grid(row = 1,column = 0)
+			tk.Label(self,text= "sign : ").grid(row = 1, column = 0)
+			choice_X = tk.Button(self,text="X",command = lambda: controller.show_frame(Grid_size))
+			choice_X.grid(row = 1,column = 1,sticky="w")
 			
-			self.choice_O = tk.Button(self,text="O",command = lambda: controller.show_frame(Grid_size))
-			self.choice_O.grid(row = 1, column = 1)
+			choice_O = tk.Button(self,text="O",command = lambda: controller.show_frame(Grid_size))
+			choice_O.grid(row = 1, column = 1,sticky = "e")
 			
-			self.back_button.grid(row = 2, column = 0)
-			self.quit_button.grid(row = 2, column = 1)
+			back_button.grid(row = 2, column = 0)
+			quit_button.grid(row = 2, column = 1)
 
 class Grid_size(tk.Frame):	
 
 	def __init__(self,parent,controller):
 		
 		tk.Frame.__init__(self,parent)
-		self.back_button = tk.Button(self,text = "< Back",command = lambda:controller.show_frame(Info_player_page)) 
-		self.quit_button = tk.Button(self,text = "quit", command = quit)
+		back_button = tk.Button(self,text = "< Back",command = lambda:controller.show_frame(Info_player_page)) 
+		quit_button = tk.Button(self,text = "quit", command = quit)
 
-		self.size9_buttton = tk.Button(self,text = "3x3",command = lambda: controller.show_frame(Draw_grid))
-		self.size15_button = tk.Button(self,text = "3x5",command = lambda: controller.show_frame(Draw_grid)) 
-		self.size16_button = tk.Button(self,text = "4x4",command = lambda: controller.show_frame(Draw_grid))
+		size9_buttton = tk.Button(self,text = "3x3",command = lambda: controller.show_frame(Draw_grid))
+		size15_button = tk.Button(self,text = "3x5",command = lambda: controller.show_frame(Draw_grid)) 
+		size16_button = tk.Button(self,text = "4x4",command = lambda: controller.show_frame(Draw_grid))
 
-		self.size9_buttton.grid(row = 0, column = 1)
-		self.size15_button.grid(row = 1, column = 1)
-		self.size16_button.grid(row = 2, column = 1)
-		self.back_button.grid(row = 3, column = 0)
-		self.quit_button.grid(row = 3, column = 2)
+		size9_buttton.grid(row = 0, column = 1)
+		size15_button.grid(row = 1, column = 1)
+		size16_button.grid(row = 2, column = 1)
+		back_button.grid(row = 3, column = 0)
+		quit_button.grid(row = 3, column = 2)
 
 class Draw_grid(tk.Frame):
 
@@ -83,8 +90,8 @@ class Draw_grid(tk.Frame):
 
 		tk.Frame.__init__(self,parent)
 
-		self.quit_button = tk.Button(self,text = "quit", command = quit)
-		self.quit_button.grid(row = 5, column = 4 )
+		quit_button = tk.Button(self,text = "quit", command = quit)
+		quit_button.grid(row = 5, column = 4 )
 
 		tk.Label(self,text="Player 1").grid(row = 0, column = 0)
 		tk.Label(self,text="Player 2").grid(row = 0, column = 4)
