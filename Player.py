@@ -5,3 +5,4 @@ class Player():
 		
 		self.name =  name
 		self.symbol = symbol
+
