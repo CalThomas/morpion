@@ -2,101 +2,135 @@ import tkinter as tk
 
 
 class Gui(tk.Tk):
-
+	"""
+		Create main window and show good 
+	"""
 	def __init__(self,*args,**kwargs):
 		tk.Tk.__init__(self,*args,**kwargs)
 		self.title("Tic Tac Toe")
 		self.config(bg ="white")
-		container = tk.Frame(self)
-		container.pack()
+		self.container = tk.Frame(self)
+		self.container.pack()
 
 		self.frames = {}
 
-		for f in (Main_menu_page,Info_player_page,Grid_size,Draw_grid):
-			frame = f(container,self)
+		for f in (Main_menu_page,Info_player_page,Board_size):
+			frame = f(self.container,self)
 			self.frames[f]= frame
 			frame.grid(row=0,column=0,sticky="nsew")
 
 		self.show_frame(Main_menu_page)
 
 	def show_frame(self, context):
-
+		
 		frame = self.frames[context]
 		frame.tkraise()
-		
+
 class Main_menu_page(tk.Frame) :
-
+	"""
+		Menu Frame : First frame created at beging of App
+	"""
 	def __init__(self,parent,controller):
+		#create for diply button, ...
 		tk.Frame.__init__(self,parent)
-
+		self.controller = controller
+		#create canvas for show one logo
 		logo_canvas = tk.Canvas(self,width = 477, height = 329)
-		self.logo = tk.PhotoImage(file = "Morpion.gif")
+		#load image for logo
+		self.logo = tk.PhotoImage(file = "Image/Morpion.gif")
+		#display image
 		logo_canvas.create_image(239,165,image=self.logo)
 		logo_canvas.grid(row = 0,column = 0,columnspan=5)
 
+		#create button for start game with one player
 		one_Player_button = tk.Button(self,text = "1 Player",command= lambda:controller.show_frame(Info_player_page))
 		one_Player_button.grid(row = 1, column = 2,sticky="ew")
 
+		#create button for start game with two player
 		two_Player_button = tk.Button(self,text = "2 Player",command=lambda:controller.show_frame(Info_player_page))
 		two_Player_button.grid(row = 2, column = 2,sticky ="ew")
 
+		#create quit button
 		quit_button = tk.Button(self,text = "Quit",command=quit)
-		quit_button.grid(row = 3,column = 4)
+		quit_button.grid(row = 3,column = 4, sticky="ew")
 
 class Info_player_page(tk.Frame):
+	"""
+		Frame for information about player
+	"""
+	def __init__(self,parent,controller):
 
-		def __init__(self,parent,controller):
+		#create frame
+		tk.Frame.__init__(self,parent)
+		self.controller = controller
+		#create back and quit button 
+		# back button use for comem back to menu
+		back_button = tk.Button(self,text = "< Back",command = lambda:controller.show_frame(Main_menu_page)) 
+		quit_button = tk.Button(self,text = "quit", command = quit)
 
-			tk.Frame.__init__(self,parent)
-			back_button = tk.Button(self,text = "< Back",command = lambda:controller.show_frame(Main_menu_page)) 
-			quit_button = tk.Button(self,text = "quit", command = quit)
+		#create label and entry for user nickname
+		tk.Label(self,text="Name : ").grid(row = 0,column=0)
+		playerName = tk.StringVar()
+		EntryName = tk.Entry(self,textvariable=playerName)
+		EntryName.grid(row = 0,column = 1, columnspan = 3)
+		EntryName.focus()
 
-			tk.Label(self,text="Name : ").grid(row = 0,column=0)
-			playerName = tk.StringVar()
-			EntryName = tk.Entry(self,textvariable=playerName)
-			EntryName.grid(row = 0,column = 1)
+		#button for choice symbol durin game
+		tk.Label(self,text= "sign : ").grid(row = 1, column = 0)
+		choice_X = tk.Button(self,text="X",command = lambda: controller.show_frame(Board_size))
+		choice_X.grid(row = 1,column = 1, sticky="ew")
+		
+		choice_O = tk.Button(self,text="O",command = lambda: controller.show_frame(Board_size))
+		choice_O.grid(row = 1, column = 2, sticky="ew")
+		
+		back_button.grid(row = 2, column = 0, sticky="ew")
+		quit_button.grid(row = 2, column = 3, sticky="ew")
 
-			tk.Label(self,text= "sign : ").grid(row = 1, column = 0)
-			choice_X = tk.Button(self,text="X",command = lambda: controller.show_frame(Grid_size))
-			choice_X.grid(row = 1,column = 1,sticky="w")
-			
-			choice_O = tk.Button(self,text="O",command = lambda: controller.show_frame(Grid_size))
-			choice_O.grid(row = 1, column = 1,sticky = "e")
-			
-			back_button.grid(row = 2, column = 0)
-			quit_button.grid(row = 2, column = 1)
-
-class Grid_size(tk.Frame):	
-
+class Board_size(tk.Frame):	
+	"""
+		Menu for game size 
+	"""
 	def __init__(self,parent,controller):
 		
+
 		tk.Frame.__init__(self,parent)
+		self.controller = controller
+
 		back_button = tk.Button(self,text = "< Back",command = lambda:controller.show_frame(Info_player_page)) 
 		quit_button = tk.Button(self,text = "quit", command = quit)
 
-		size9_buttton = tk.Button(self,text = "3x3",command = lambda: controller.show_frame(Draw_grid))
-		size15_button = tk.Button(self,text = "3x5",command = lambda: controller.show_frame(Draw_grid)) 
-		size16_button = tk.Button(self,text = "4x4",command = lambda: controller.show_frame(Draw_grid))
+		# create button for differente choice of size
+		size9_buttton = tk.Button(self,text = "3x3",command = lambda: self.create_board(3,3))
+		size15_button = tk.Button(self,text = "3x5",command = lambda: self.create_board(3,5)) 
+		size16_button = tk.Button(self,text = "4x4",command = lambda: self.create_board(4,4))
 
 		size9_buttton.grid(row = 0, column = 1)
 		size15_button.grid(row = 1, column = 1)
 		size16_button.grid(row = 2, column = 1)
-		back_button.grid(row = 3, column = 0)
-		quit_button.grid(row = 3, column = 2)
+		back_button.grid(row = 3, column = 0, sticky="ew")
+		quit_button.grid(row = 3, column = 2, sticky="ew")
 
-class Draw_grid(tk.Frame):
+	def create_board(self,x,y):
+						
+		frame = Game_board(self.controller.container,self.controller,x,y)
+		self.controller.frames[Game_board]= frame
+		frame.grid(row=0,column=0,sticky="nsew")
 
-	def __init__(self,parent,controller):
+class Game_board(tk.Frame):
+
+	def __init__(self,parent,controller,x,y):
 
 		tk.Frame.__init__(self,parent)
-
+		self.controller = controller
 		quit_button = tk.Button(self,text = "quit", command = quit)
-		quit_button.grid(row = 5, column = 4 )
+		self.x = x
+		self.y = y
 
 		tk.Label(self,text="Player 1").grid(row = 0, column = 0)
-		tk.Label(self,text="Player 2").grid(row = 0, column = 4)
 
-		for i in range(1,4):
-			for j in range (1,4):
-				tk.Button(self).grid(row = i , column = j)	
+		for i in range(1,x+1) :
+			for j in range (1,y+1):
+				tk.Button(self).grid(row = i , column = j)
 
+		quit_button.grid(row = 5, column = 6 , sticky="ew")
+		tk.Label(self,text="Player 2").grid(row = 0, column = 6)
